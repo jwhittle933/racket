@@ -22,3 +22,32 @@
          [c4 (four c)])
     (four c4)))
 
+(define series
+  (lambda (mk)
+    (hc-append 4 (mk 5) (mk 10) (mk 20))))
+
+(series (lambda (size) (checkerboard (square size))))
+
+(define (rgb-series mk)
+  (vc-append
+   (series (lambda (sz) (colorize (mk sz) "red")))
+   (series (lambda (sz) (colorize (mk sz) "green")))
+   (series (lambda (sz) (colorize (mk sz) "blue")))))
+
+(list "red" "green" "blue")
+(list (circle 10) (square 10))
+
+(define (rainbow p)
+  (map (lambda (color))
+       (colorize p color))
+  (list "red" "orange" "yellow" "green" "blue" "purple"))
+
+(require racket/class
+         racket/gui/base)
+
+(define f (new frame% [label "Frame"]
+               [width 300]
+               [height 300]
+               [alignment '(center center)]))
+
+(send f show #t)
